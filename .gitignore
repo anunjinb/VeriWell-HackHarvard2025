@@ -1,0 +1,13 @@
+Environment variables
+.env
+
+Secret credentials and configuration files
+firebase_credentials.json
+config.json
+
+Python virtual environment
+venv/
+pycache/
+
+macOS specific files
+.DS_Store
