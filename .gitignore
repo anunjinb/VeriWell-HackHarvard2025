@@ -11,3 +11,6 @@ pycache/
 
 macOS specific files
 .DS_Store
+
+printf "__pycache__/\n*.pyc\n.env\n" >> .gitignore
+git add .gitignore

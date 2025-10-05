@@ -4,9 +4,30 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 import pandas as pd
 from datetime import datetime
+from firebase_config import initialize_firebase
 
 # Load environment variables
 load_dotenv()
+
+# Try to ensure an API key is available. The library may look for GOOGLE_API_KEY or
+# use genai.configure(api_key=...). We prefer GEMINI_API_KEY but accept either.
+key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+if not key:
+    try:
+        import json
+        with open("config.json", "r") as cf:
+            cfg = json.load(cf)
+            # Prefer GEMINI_API_KEY but accept GOOGLE_API_KEY too
+            key = cfg.get("GEMINI_API_KEY") or cfg.get("GOOGLE_API_KEY")
+            if key:
+                os.environ["GEMINI_API_KEY"] = key
+                os.environ["GOOGLE_API_KEY"] = key
+    except FileNotFoundError:
+        # no config.json present locally — that's fine, we'll show an error later
+        pass
+    except Exception:
+        # avoid crashing on parse errors; will handle missing key below
+        pass
 
 # --- Page Configuration ---
 st.set_page_config(
@@ -62,8 +83,17 @@ st.markdown("""
 def initialize_session():
     """Initializes the AI model and session state variables."""
     try:
-        # Configure the generative AI model with the API key
-        genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+        # Configure the generative AI model with the API key (explicit)
+        api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+        if not api_key:
+            st.error(
+                "No Gemini/Google API key found.\n"
+                "Set GEMINI_API_KEY in a .env file, export GOOGLE_API_KEY in your shell, or add it to `config.json`.\n"
+                "See README.md for setup instructions."
+            )
+            st.stop()
+
+        genai.configure(api_key=api_key)
 
         # Initialize chat session in state if it doesn't exist
         if "chat_session" not in st.session_state:
@@ -134,6 +164,18 @@ with st.sidebar:
                 st.session_state.latest_insight = insight_response.text
 
                 st.success("Insight generated! Check the Dashboard.")
+
+            # Attempt to save the habit log to Firestore
+            try:
+                db = initialize_firebase()
+                if db:
+                    # Firestore can store datetime objects; save to a collection named 'habit_logs'
+                    db.collection("habit_logs").add(log_entry)
+                    st.info("Saved habit log to Firebase.")
+                else:
+                    st.info("Firebase not initialized; habit log saved locally only.")
+            except Exception as fb_e:
+                st.error(f"Failed to save habit log to Firebase: {fb_e}")
 
 # --- Main Page Layout ---
 st.title("🌿 VeriWell")
