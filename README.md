@@ -6,9 +6,7 @@ VeriWell uses **Generative AI** to help students connect their daily habits (sle
 ## 🚀 Quick Links & Demo
 | Item | Link |
 | :--- | :--- |
-| **Live Demo Link** | [**INSERT LIVE LINK TO STREAMLIT CLOUD HERE**] |
-| **Demo Video/Pitch** | [**INSERT YOUTUBE/LOOM LINK HERE**] |
-| **Presentation Deck** | [Insert Link to Slides Here (Optional)] |
+| **Demo Video/Pitch** | [**https://youtu.be/6NL0ZSm25nw**] |
 
 ## ✨ Key Technologies (The Stack)
 [![Python](https://img.shields.io/badge/Language-Python-3776AB?style=for-the-badge&logo=python)](https://www.python.org/)
@@ -31,6 +29,13 @@ VeriWell acts as a data scientist and coach, turning raw input into tailored beh
 1.  **Habit & Well-being Logging:** A fast, simple interface (built with Streamlit) allows students to log daily activities (sleep, exercise, meals, study hours) and subjective well-being scores (e.g., mood, stress level).
 2.  **AI Correlation Engine (Gemini API):** We engineered a custom LLM prompt that processes the user's historical data, transforming it into a correlation analysis. The AI identifies specific patterns such as: *"When your screen time exceeds 4 hours, your sleep latency increases by an average of 15 minutes."*
 3.  **Personalized Coaching:** Based on the data-driven correlations, VeriWell provides specific, empathetic, and actionable coaching recommendations, replacing generic advice with highly personalized, weekly tasks aimed at improving student performance and mental health.
+
+---
+
+<img width="1271" height="624" alt="0" src="https://github.com/user-attachments/assets/992ce2e2-2083-4cdf-89f5-01ea797181cd" />
+<img width="1271" height="624" alt="1" src="https://github.com/user-attachments/assets/b540bdd8-ac24-441b-ad35-59b8635eadda" />
+<img width="1271" height="624" alt="3" src="https://github.com/user-attachments/assets/2428ec15-a2e8-40bd-b0bc-f906265d6517" />
+<img width="1216" height="681" alt="4" src="https://github.com/user-attachments/assets/1cafd024-3a29-402e-9567-bffbd5bed718" />
 
 ---
 
